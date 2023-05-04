@@ -1,3 +1,5 @@
+import { Container, Header, Link } from './App.styled';
+
 export const App = () => {
   return (
     <Container>
@@ -9,10 +11,11 @@ export const App = () => {
           <Link to="/movies">Movies</Link>
         </nav>
       </Header>
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<Movies />} />
-      </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes> */}
     </Container>
   );
 };
