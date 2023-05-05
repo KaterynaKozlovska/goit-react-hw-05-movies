@@ -1,3 +1,13 @@
+// import { useEffect } from 'react';
+
 export const Movies = () => {
-  return <h1>Movies</h1>;
+  // useEffect(() => {HTTP запит }, []);
+  return (
+    <main>
+      <form action="">
+        <input type="text" />
+        <label htmlFor="">Search</label>
+      </form>
+    </main>
+  );
 };
