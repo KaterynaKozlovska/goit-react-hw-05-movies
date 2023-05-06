@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import React from 'react';
-import axios from 'axios';
+
 import { useState } from 'react';
+import { MoviesFinderApi } from '../moviesFinderApi';
+import { MoviesList } from 'components/MoviesList';
 
 // axios.defaults.baseURL = 'https://api.themoviedb.org';
 // const MoviesListFinder = ({ movies }) => (
@@ -22,23 +24,30 @@ export const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const pathMovies = 'trending/movie/day';
   useEffect(() => {
-    setIsLoading(true);
-
-    try {
-      const response = axios.get(MoviesListFinder(movies));
-      setMovies(prevState => [...prevState, response]);
-    } catch {
-    } finally {
-      setIsLoading(false);
+    async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await MoviesFinderApi(pathMovies);
+        setMovies(data.results);
+      } catch {
+      } finally {
+        setIsLoading(false);
+      }
     }
-  });
+
+    getData();
+  }, []);
+
+  if (!movies) {
+    return null;
+  }
 
   return (
     <main>
       <div>
-        {isLoading} <p>Loading...</p> <MoviesListFinder movies={movies} /> :
-        null
+        {isLoading} <p>Loading...</p> <MoviesList movies={movies} />
       </div>
     </main>
   );
