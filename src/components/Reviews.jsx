@@ -12,7 +12,7 @@ export const Reviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const { data } = await fetchReviewsByMovieId(movieId, 'reviews');
+        const { data } = await fetchReviewsByMovieId(movieId);
         setReviews(data.results);
       } catch {}
     };
