@@ -9,7 +9,7 @@ import { MoviesList } from 'components/MoviesList';
 
 export const Home = () => {
   const [trends, setTrends] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {

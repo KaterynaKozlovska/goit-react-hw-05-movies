@@ -6,19 +6,15 @@ import { List, Item, Name, Content } from './Reviews.styled';
 
 export const Reviews = () => {
   const [reviews, setReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+
   const { movieId } = useParams();
 
   useEffect(() => {
     const fetchReviews = async () => {
-      setIsLoading(true);
       try {
         const { data } = await fetchReviewsByMovieId(movieId, 'reviews');
         setReviews(data.results);
-      } catch {
-      } finally {
-        setIsLoading(false);
-      }
+      } catch {}
     };
     fetchReviews();
   }, [movieId]);

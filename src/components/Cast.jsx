@@ -6,20 +6,16 @@ import { List, Item, Image, TextWrapper, Name, Content } from './Cast.styled';
 
 export const Cast = () => {
   const [cast, setCast] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+
   const { movieId } = useParams();
   const ImgBaseURL = 'https://image.tmdb.org/t/p/original';
 
   useEffect(() => {
     const fetchCast = async () => {
-      setIsLoading(true);
       try {
         const { data } = await fetchCastByMovieId(movieId, 'credits');
         setCast(data.cast);
-      } catch {
-      } finally {
-        setIsLoading(false);
-      }
+      } catch {}
     };
     fetchCast();
   }, [movieId]);

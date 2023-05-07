@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { fetchMoviesById } from '../moviesFinderApi';
 
 import {
@@ -18,23 +18,18 @@ import {
 
 export const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+
   const { movieId } = useParams();
   const ImgBaseURL = 'https://image.tmdb.org/t/p/original';
 
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
-      setIsLoading(true);
       try {
         const data = await fetchMoviesById(movieId);
         setMovie(data);
-      } catch {
-      } finally {
-        setIsLoading(false);
-      }
+      } catch {}
     };
     fetchMovieDetails();
   }, [movieId]);
