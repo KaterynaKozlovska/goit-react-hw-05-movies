@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { fetchMoviesById } from '../moviesFinderApi';
 
 import {
-  MovieContainer,
-  Image,
-  InfoWrapper,
+  MovieCard,
+  Images,
   Title,
-  SubTitle,
-  Description,
-  Count,
-  List,
-  ItemLink,
+  Span,
+  Text,
+  TitleText,
+  GenresList,
+  Item,
 } from './MovieDetails.styled';
 
-export const MovieDetails = () => {
+export function MovieDetails() {
   const [movie, setMovie] = useState(null);
 
   const { movieId } = useParams();
@@ -33,42 +32,42 @@ export const MovieDetails = () => {
   }, [movieId]);
 
   return (
-    <main>
-      <MovieContainer>
-        <Image
-          src={`${ImgBaseURL}/${movie.poster_path}`}
-          alt={movie.title}
-          width="240"
-          height="360"
-        />
-        <InfoWrapper>
-          <Title>{movie.title}</Title>
-          <SubTitle>
-            Vote / Votes:
-            <Count>
-              {movie.vote_average} / {movie.vote_count}
-            </Count>
-          </SubTitle>
-          <SubTitle>Overview</SubTitle>
-          <Description>{movie.overview}</Description>
-          <SubTitle>Genres</SubTitle>
-          <Description>
-            {movie.genres.map(item => (
-              <List key={item.id}>{item.name}</List>
-            ))}
-          </Description>
-
-          <SubTitle>Additional information</SubTitle>
-          <List>
-            <ItemLink to="cast" state={{ from: location.state?.from }}>
-              Cast
-            </ItemLink>
-            <ItemLink to="reviews" state={{ from: location.state?.from }}>
-              Reviews
-            </ItemLink>
-          </List>
-        </InfoWrapper>
-      </MovieContainer>
-    </main>
+    !!movie && (
+      <>
+        <MovieCard>
+          <Images
+            src={`${ImgBaseURL}/${movie.poster_path}`}
+            alt={movie.title}
+          />
+          <div>
+            <Title>{movie.title}</Title>
+            <Text>
+              <Span>Vote/Votes:</Span> {movie.vote_average} / {movie.vote_count}
+            </Text>
+            <TitleText>Overview</TitleText>
+            <Text>{movie.overview}</Text>
+            <TitleText>Genres</TitleText>
+            <GenresList>
+              {movie.genres.map(item => (
+                <Item key={item.id}>{item.name}</Item>
+              ))}
+            </GenresList>
+            <TitleText>Additional information</TitleText>
+            <ul>
+              <Item>
+                <Link to="cast" state={{ from: location.state?.from }}>
+                  Cast
+                </Link>
+              </Item>
+              <Item>
+                <Link to="reviews" state={{ from: location.state?.from }}>
+                  Reviews
+                </Link>
+              </Item>
+            </ul>
+          </div>
+        </MovieCard>
+      </>
+    )
   );
-};
+}

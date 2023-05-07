@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useState } from 'react';
 import { fetchTrendingMovies } from '../moviesFinderApi';
-import { MoviesList } from 'components/MoviesList';
+import { MoviesList } from '../components/MoviesList';
 
 // `https://api.themoviedb.org/3/movie/550?api_key=23ef7ebe7a5765558b3c745e54a99f35`;
 
