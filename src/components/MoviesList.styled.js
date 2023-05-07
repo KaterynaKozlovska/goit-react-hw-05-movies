@@ -18,21 +18,9 @@ const Item = styled.li`
   }
 `;
 
-// const Image = styled.img`
-//   display: block;
-//   width: 100%;
-//   height: auto;
-//   background-color: darkgray;
-//   @media screen and (min-width: 320px) {
-//     width: 240px;
-//   }
-//   @media screen and (min-width: 768px) {
-//     width: 170px;
-//   }
-//   @media screen and (min-width: 1280px) {
-//     width: 200px;
-//   }
-// `;
+const Image = styled.img`
+  display: block;
+`;
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -54,4 +42,4 @@ const Name = styled.p`
   text-align: center;
 `;
 
-export { List, Item, StyledLink, Name };
+export { List, Item, StyledLink, Image, Name };
