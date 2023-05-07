@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import { MoviesFinderApiById } from '../moviesFinderApi';
 import { List, Item, Name, Content } from './Reviews.styled';
 
-const Reviews = () => {
+export const Reviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getData() {
@@ -51,5 +50,3 @@ Reviews.propTypes = {
     })
   ),
 };
-
-export default Reviews;

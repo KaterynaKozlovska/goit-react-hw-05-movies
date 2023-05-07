@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { MoviesFinderApiById } from '../moviesFinderApi';
 import { List, Item, Image, TextWrapper, Name, Content } from './Cast.styled';
 
-const Cast = () => {
+export const Cast = () => {
   const { movieId } = useParams();
   const [cast, setCast] = useState([]);
 
@@ -62,5 +62,3 @@ Cast.propTypes = {
     })
   ),
 };
-
-export default Cast;
