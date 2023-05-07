@@ -1,48 +1,44 @@
 import { useState, useEffect } from 'react';
-import { MoviesFinderApi } from '../moviesFinderApi';
+import { fetchMovies } from '../moviesFinderApi';
 import { MoviesList } from '../components/MoviesList';
 import { MoviesContainer, MoviesSection } from './Movies.styled';
 import { SearchForm } from '../components/SearchForm';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Movies = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchQuery = searchParams.get('query') ?? '';
-  const pathParams = `search/movie?query=${searchQuery}`;
-
+  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  let params = new URLSearchParams(location.search).get('query');
 
   useEffect(() => {
-    if (searchQuery === '') return;
-
-    async function getData() {
+    if (params !== '' && !query) {
+      setQuery(params);
+      return;
+    }
+    const fetchMoviesByQuery = async () => {
       setIsLoading(true);
       try {
-        const { data } = await MoviesFinderApi(pathParams);
+        const data = await fetchMovies(query, page);
         setMovies(data.results);
       } catch {
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
-    getData();
-  }, [pathParams, searchQuery]);
+    fetchMoviesByQuery();
+  }, [page, params, query]);
 
-  const handleFormSubmit = searchQuery => {
-    reset();
-    updateQueryString(searchQuery);
-  };
-
-  const updateQueryString = query => {
-    const nextParams = query !== '' ? { query } : {};
-    setSearchParams(nextParams);
-  };
-
-  const reset = () => {
-    setSearchParams('');
-    setIsLoading(false);
+  const handleFormSubmit = query => {
+    navigate({ ...location, search: `query=${query}` });
+    setQuery(query);
+    setPage(1);
   };
 
   return (
@@ -50,10 +46,8 @@ export const Movies = () => {
       <MoviesContainer>
         <MoviesSection>
           <SearchForm onSubmit={handleFormSubmit} />
-
-          {isLoading}
-
           {movies.length > 0 && <MoviesList movies={movies} />}
+          {isLoading}
         </MoviesSection>
       </MoviesContainer>
     </main>

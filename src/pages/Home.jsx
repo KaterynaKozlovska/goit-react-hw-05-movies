@@ -2,34 +2,30 @@ import { useEffect } from 'react';
 import React from 'react';
 
 import { useState } from 'react';
-import { MoviesFinderApi } from '../moviesFinderApi';
+import { fetchTrendingMovies } from '../moviesFinderApi';
 import { MoviesList } from 'components/MoviesList';
 
 // `https://api.themoviedb.org/3/movie/550?api_key=23ef7ebe7a5765558b3c745e54a99f35`;
 
 export const Home = () => {
   const [trends, setTrends] = useState([]);
+  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const pathParams = 'trending/movie/day';
   useEffect(() => {
-    async function getData() {
+    const fetchMovies = async () => {
       setIsLoading(true);
       try {
-        const { data } = await MoviesFinderApi(pathParams);
+        const data = await fetchTrendingMovies(page);
         setTrends(data.results);
       } catch {
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
-    getData();
-  }, []);
-
-  if (!trends) {
-    return null;
-  }
+    fetchMovies();
+  }, [page]);
 
   return (
     <main>

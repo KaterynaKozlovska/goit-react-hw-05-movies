@@ -1,26 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { MoviesFinderApiById } from '../moviesFinderApi';
+import { fetchReviewsByMovieId } from '../moviesFinderApi';
 import { List, Item, Name, Content } from './Reviews.styled';
 
 export const Reviews = () => {
-  const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { movieId } = useParams();
 
   useEffect(() => {
-    async function getData() {
+    const fetchReviews = async () => {
+      setIsLoading(true);
       try {
-        const { data } = await MoviesFinderApiById(movieId, 'reviews');
+        const { data } = await fetchReviewsByMovieId(movieId, 'reviews');
         setReviews(data.results);
-      } catch {}
-    }
-    getData();
+      } catch {
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchReviews();
   }, [movieId]);
-
-  if (!reviews) {
-    return null;
-  }
 
   return (
     <>

@@ -1,31 +1,26 @@
-import { Container, Header, Link } from './App.styled';
-import { Routes, Route } from 'react-router-dom';
+import { Container } from './App.styled';
+import { BrowserRouter as Routes, Route, Navigate } from 'react-router-dom';
 
 import { Home } from '../pages/Home';
 import { Movies } from '../pages/Movies';
 import { MovieDetails } from '../pages/MovieDetails';
 import { Cast } from '../components/Cast';
 import { Reviews } from '../components/Reviews';
+import Navigation from '../components/Navigation';
 
 export const App = () => {
   return (
     <Container>
-      <Header>
-        <nav>
-          <Link to="/" end>
-            Home
-          </Link>
-          <Link to="movies">Movies</Link>
-        </nav>
-      </Header>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="movies" element={<Movies />} />
-        <Route path="movies/:movieId" element={<MovieDetails />}>
-          <Route path="cast" element={<Cast />} />
-          <Route path="reviews" element={<Reviews />} />
+        <Route path="/" element={<Navigation />}>
+          <Route index element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/movies/:movieId" element={<MovieDetails />}>
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
-        <Route path="*" element={<Home />} />
       </Routes>
     </Container>
   );

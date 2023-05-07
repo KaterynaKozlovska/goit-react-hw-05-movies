@@ -1,40 +1,59 @@
-import axios from 'axios';
-import PropTypes from 'prop-types';
-
 const API_KEY = '23ef7ebe7a5765558b3c745e54a99f35';
-const BASE_URL = 'https://api.themoviedb.org/3/';
+const BASE_URL = 'https://api.themoviedb.org/3';
 
-async function MoviesFinderApi(pathParams) {
-  const axiosInstance = axios.create({
-    baseURL: `${BASE_URL}${pathParams}`,
-    headers: { 'Content-Type': 'application/json' },
-    params: {
-      api_key: API_KEY,
-    },
-  });
-  return await axiosInstance.get();
-}
+export const fetchTrendingMovies = async page => {
+  const response = await fetch(
+    `${BASE_URL}/trending/movie/week?api_key=${API_KEY}&page=${page}`
+  );
 
-async function MoviesFinderApiById(id, path) {
-  const pathURL = path ? `/${path}` : '';
-  const pathParams = `movie/${id}${pathURL}`;
-  const axiosInstance = axios.create({
-    baseURL: `${BASE_URL}${pathParams}`,
-    headers: { 'Content-Type': 'application/json' },
-    params: {
-      api_key: API_KEY,
-    },
-  });
-
-  return await axiosInstance.get();
-}
-MoviesFinderApi.propTypes = {
-  pathParams: PropTypes.string.isRequired,
+  return response.ok
+    ? response.json()
+    : Promise.reject(
+        new Error('Images has not been found. Please, check your request!')
+      );
 };
 
-MoviesFinderApiById.propTypes = {
-  id: PropTypes.string.isRequired,
-  path: PropTypes.string,
+export const fetchMovies = async (query, page) => {
+  const response = await fetch(
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`
+  );
+
+  return response.ok
+    ? response.json()
+    : Promise.reject(
+        new Error('Images has not been found. Please, check your request!')
+      );
 };
 
-export { MoviesFinderApi, MoviesFinderApiById };
+export const fetchMoviesById = async id => {
+  const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
+
+  return response.ok
+    ? response.json()
+    : Promise.reject(
+        new Error('Images has not been found. Please, check your request!')
+      );
+};
+
+export const fetchCastByMovieId = async id => {
+  const response = await fetch(
+    `${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`
+  );
+
+  return response.ok
+    ? response.json()
+    : Promise.reject(
+        new Error('Images has not been found. Please, check your request!')
+      );
+};
+export const fetchReviewsByMovieId = async id => {
+  const response = await fetch(
+    `${BASE_URL}/movie/${id}/reviews?api_key=${API_KEY}`
+  );
+
+  return response.ok
+    ? response.json()
+    : Promise.reject(
+        new Error('Images has not been found. Please, check your request!')
+      );
+};

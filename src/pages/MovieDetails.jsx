@@ -1,6 +1,6 @@
 import { useState, useEffect, Suspense } from 'react';
-import { useParams, useLocation, Outlet } from 'react-router-dom';
-import { MoviesFinderApiById } from '../moviesFinderApi';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { fetchMoviesById } from '../moviesFinderApi';
 
 import {
   MovieContainer,
@@ -17,75 +17,56 @@ import {
 } from './MovieDetails.styled';
 
 export const MovieDetails = () => {
-  const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { movieId } = useParams();
+  const ImgBaseURL = 'https://image.tmdb.org/t/p/original';
 
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/movies';
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function getData() {
+    const fetchMovieDetails = async () => {
+      setIsLoading(true);
       try {
-        const { data } = await MoviesFinderApiById(movieId);
+        const data = await fetchMoviesById(movieId);
         setMovie(data);
-      } catch {}
-    }
-    getData();
+      } catch {
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchMovieDetails();
   }, [movieId]);
-
-  if (!movie) {
-    return null;
-  }
-
-  const {
-    id,
-    release_date,
-    poster_path,
-    title,
-    popularity,
-    vote_average,
-    vote_count,
-    genres,
-    overview,
-  } = movie;
-
-  const imgDefault =
-    'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj';
 
   return (
     <main>
       <MovieContainer>
-        <BoxDetails key={id}>
+        <BoxDetails key={movie.id}>
           <Image
-            src={
-              poster_path
-                ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                : imgDefault
-            }
-            alt={title}
+            src={`${ImgBaseURL}/${movie.poster_path}`}
+            alt={movie.title}
             width="240"
             height="360"
             loading="lazy"
           />
           <InfoWrapper>
-            <Title>
-              {title} {release_date.slice(0, 4)}
-            </Title>
+            <Title>{movie.title}</Title>
             <SubTitle>
               Vote / Votes:
               <Count>
-                {vote_average.toFixed(2)} / {vote_count}
+                {movie.vote_average.toFixed(2)} / {movie.vote_count}
               </Count>
             </SubTitle>
             <SubTitle>
               Popularity:
-              <Count>{Math.floor(popularity).toLocaleString('ru')}</Count>
+              <Count>{Math.floor(movie.popularity).toLocaleString('ru')}</Count>
             </SubTitle>
             <SubTitle>Overview</SubTitle>
-            <Description>{overview}</Description>
+            <Description>{movie.overview}</Description>
             <SubTitle>Genres</SubTitle>
             <Description>
-              {genres
+              {movie.genres
                 .map(({ name }) => {
                   return name;
                 })
@@ -94,19 +75,17 @@ export const MovieDetails = () => {
 
             <SubTitle>Additional information</SubTitle>
             <List>
-              <ItemLink to="cast" state={{ from: backLinkHref }}>
+              <ItemLink to="cast" state={{ from: location.state?.from }}>
                 Cast
               </ItemLink>
-              <ItemLink to="reviews" state={{ from: backLinkHref }}>
+              <ItemLink to="reviews" state={{ from: location.state?.from }}>
                 Reviews
               </ItemLink>
             </List>
           </InfoWrapper>
         </BoxDetails>
         <BoxAdditional>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Outlet />
-          </Suspense>
+          <Suspense fallback={<div>Loading...</div>}></Suspense>
         </BoxAdditional>
       </MovieContainer>
     </main>
