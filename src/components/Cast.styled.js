@@ -28,7 +28,7 @@ const Image = styled.img`
   height: 100%;
 `;
 
-const Wrapper = styled.div`
+const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -40,9 +40,9 @@ const Name = styled.p`
   font-weight: 500;
 `;
 
-const Text = styled.p`
+const Content = styled.p`
   font-size: 12px;
   font-weight: 400;
 `;
 
-export { List, Item, Image, Wrapper, Name, Text };
+export { List, Item, Image, TextWrapper, Name, Content };
