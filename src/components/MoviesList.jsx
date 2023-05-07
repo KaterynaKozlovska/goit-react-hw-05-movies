@@ -3,7 +3,7 @@ import { List, Item, StyledLink, Name } from './MoviesList.styled';
 export const MoviesList = ({ movies }) => {
   return (
     <List>
-      {movies.map(({ id, poster_path, title }) => (
+      {movies.map(({ id, title }) => (
         <Item key={id}>
           <StyledLink to={`/movies/&{id}`}>
             {/* <Image
