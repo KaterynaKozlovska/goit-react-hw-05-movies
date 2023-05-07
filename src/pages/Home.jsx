@@ -47,7 +47,7 @@ export const Home = () => {
   return (
     <main>
       <div>
-        {isLoading} <p>Loading...</p> <MoviesList movies={movies} />
+        {isLoading} <MoviesList movies={movies} />
       </div>
     </main>
   );

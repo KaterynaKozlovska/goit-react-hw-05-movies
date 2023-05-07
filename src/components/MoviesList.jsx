@@ -1,4 +1,4 @@
-import { List, Item, Image, StyledLink, Name } from './MoviesList.styled';
+import { List, Item, StyledLink, Name } from './MoviesList.styled';
 
 export const MoviesList = ({ movies }) => {
   return (
