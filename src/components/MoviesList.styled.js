@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 
 const List = styled.ul`
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-
+  margin-bottom: 20px;
   margin-right: auto;
 `;
 
@@ -53,17 +50,8 @@ const StyledLink = styled(Link)`
 
 const Name = styled.p`
   font-size: 18px;
-  font-weight: 500;
+
   text-align: center;
-  @media screen and (min-width: 320px) {
-    width: 240px;
-  }
-  @media screen and (min-width: 768px) {
-    width: 170px;
-  }
-  @media screen and (min-width: 1280px) {
-    width: 200px;
-  }
 `;
 
 export { List, Item, Image, StyledLink, Name };
