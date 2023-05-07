@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 const API_KEY = '23ef7ebe7a5765558b3c745e54a99f35';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 
-async function MoviesFinderApi(pathMovies) {
+async function MoviesFinderApi(pathParams) {
   const axiosInstance = axios.create({
-    baseURL: `${BASE_URL}${pathMovies}`,
+    baseURL: `${BASE_URL}${pathParams}`,
     headers: { 'Content-Type': 'application/json' },
     params: {
       api_key: API_KEY,
@@ -17,9 +17,9 @@ async function MoviesFinderApi(pathMovies) {
 
 async function MoviesFinderApiById(id, path) {
   const pathURL = path ? `/${path}` : '';
-  const pathMovies = `movie/${id}${pathURL}`;
+  const pathParams = `movie/${id}${pathURL}`;
   const axiosInstance = axios.create({
-    baseURL: `${BASE_URL}${pathMovies}`,
+    baseURL: `${BASE_URL}${pathParams}`,
     headers: { 'Content-Type': 'application/json' },
     params: {
       api_key: API_KEY,
@@ -29,7 +29,7 @@ async function MoviesFinderApiById(id, path) {
   return await axiosInstance.get();
 }
 MoviesFinderApi.propTypes = {
-  pathMovies: PropTypes.string.isRequired,
+  pathParams: PropTypes.string.isRequired,
 };
 
 MoviesFinderApiById.propTypes = {
