@@ -11,11 +11,6 @@ const Item = styled.li`
   padding-bottom: 5px;
 
   color: #020024;
-
-  :hover {
-    box-shadow: 0 4px 10px #000;
-    scale: 1.01;
-  }
 `;
 
 const Image = styled.img`
