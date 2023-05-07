@@ -15,13 +15,13 @@ export const App = () => {
           <Link to="/" end>
             Home
           </Link>
-          <Link to="/movies">Movies</Link>
+          <Link to="movies">Movies</Link>
         </nav>
       </Header>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/movies/:moviesId" element={<MovieDetails />}>
+        <Route path="movies" element={<Movies />} />
+        <Route path="movies/:movieId" element={<MovieDetails />}>
           <Route path="cast" element={<Cast />} />
           <Route path="reviews" element={<Reviews />} />
         </Route>

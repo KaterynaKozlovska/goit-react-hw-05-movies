@@ -35,6 +35,7 @@ export const Home = () => {
     <main>
       <div>
         {isLoading} <MoviesList movies={trends} />
+        {isLoading}
       </div>
     </main>
   );
