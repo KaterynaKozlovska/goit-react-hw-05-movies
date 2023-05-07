@@ -8,16 +8,16 @@ import { MoviesList } from 'components/MoviesList';
 // `https://api.themoviedb.org/3/movie/550?api_key=23ef7ebe7a5765558b3c745e54a99f35`;
 
 export const Home = () => {
-  const [movies, setMovies] = useState([]);
+  const [trends, setTrends] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const pathMovies = 'trending/movie/day';
+  const pathParams = 'trending/movie/day';
   useEffect(() => {
     async function getData() {
       setIsLoading(true);
       try {
-        const { data } = await MoviesFinderApi(pathMovies);
-        setMovies(data.results);
+        const { data } = await MoviesFinderApi(pathParams);
+        setTrends(data.results);
       } catch {
       } finally {
         setIsLoading(false);
@@ -27,14 +27,14 @@ export const Home = () => {
     getData();
   }, []);
 
-  if (!movies) {
+  if (!trends) {
     return null;
   }
 
   return (
     <main>
       <div>
-        {isLoading} <MoviesList movies={movies} />
+        {isLoading} <MoviesList movies={trends} />
       </div>
     </main>
   );
