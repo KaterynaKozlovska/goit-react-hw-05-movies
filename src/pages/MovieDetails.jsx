@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { fetchMoviesById } from '../moviesFinderApi';
 
 import {
@@ -11,6 +11,7 @@ import {
   TitleText,
   GenresList,
   Item,
+  ButtonBack,
 } from './MovieDetails.styled';
 
 export function MovieDetails() {
@@ -20,6 +21,7 @@ export function MovieDetails() {
   const ImgBaseURL = 'https://image.tmdb.org/t/p/original';
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -31,9 +33,16 @@ export function MovieDetails() {
     fetchMovieDetails();
   }, [movieId]);
 
+  const onGoBack = () => {
+    navigate(location.state?.from ?? '/');
+  };
+
   return (
     !!movie && (
       <>
+        <ButtonBack type="button" onClick={onGoBack}>
+          Go back
+        </ButtonBack>
         <MovieCard>
           <Images
             src={`${ImgBaseURL}/${movie.poster_path}`}
