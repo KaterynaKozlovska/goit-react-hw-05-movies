@@ -2,25 +2,18 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const List = styled.ul`
-  list-style: none;
   margin-bottom: 20px;
   margin-right: auto;
 `;
 
 const Item = styled.li`
   padding-bottom: 5px;
-
-  color: #020024;
-`;
-
-const Image = styled.img`
-  display: block;
 `;
 
 const StyledLink = styled(Link)`
   display: flex;
   flex-direction: column;
-  align-items: center;
+
   gap: 10px;
   text-decoration: none;
   color: inherit;
@@ -37,4 +30,4 @@ const Name = styled.p`
   text-align: center;
 `;
 
-export { List, Item, StyledLink, Image, Name };
+export { List, Item, StyledLink, Name };

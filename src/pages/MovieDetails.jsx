@@ -13,6 +13,7 @@ import {
   Item,
   ButtonBack,
 } from './MovieDetails.styled';
+import PropTypes from 'prop-types';
 
 export function MovieDetails() {
   const [movie, setMovie] = useState(null);
@@ -22,6 +23,7 @@ export function MovieDetails() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const backLinkHref = location.state?.from ?? '/movies';
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -64,12 +66,12 @@ export function MovieDetails() {
             <TitleText>Additional information</TitleText>
             <ul>
               <Item>
-                <Link to="cast" state={{ from: location.state?.from }}>
+                <Link to="cast" state={{ from: backLinkHref }}>
                   Cast
                 </Link>
               </Item>
               <Item>
-                <Link to="reviews" state={{ from: location.state?.from }}>
+                <Link to="reviews" state={{ from: backLinkHref }}>
                   Reviews
                 </Link>
               </Item>
@@ -80,3 +82,18 @@ export function MovieDetails() {
     )
   );
 }
+
+MovieDetails.propTypes = {
+  data: PropTypes.shape({
+    poster_path: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    release_date: PropTypes.string.isRequired,
+    vote_average: PropTypes.number.isRequired,
+    overview: PropTypes.string.isRequired,
+    genres: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ),
+  }),
+};
