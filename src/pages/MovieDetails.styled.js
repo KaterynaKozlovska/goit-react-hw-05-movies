@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const MovieCard = styled.div`
   display: flex;
+  
   padding-bottom: 15px;
   margin-bottom: 15px;
   border-bottom: 1px solid #2a363b;

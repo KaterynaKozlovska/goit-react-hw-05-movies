@@ -16,8 +16,12 @@ export const App = () => {
           <Route index exact element={<Home />} />
           <Route path="/movies" exact element={<Movies />} />
           <Route path="/movies/:movieId" exact element={<MovieDetails />}>
-            <Route path="cast" exact element={<Cast />} />
-            <Route path="reviews" exact element={<Reviews />} />
+            <Route path="/movies/:movieId/cast" exact element={<Cast />} />
+            <Route
+              path="/movies/:movieId/reviews"
+              exact
+              element={<Reviews />}
+            />
           </Route>
           <Route path="*" exact element={<Navigate to="/" />} />
         </Route>
