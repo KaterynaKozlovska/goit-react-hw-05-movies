@@ -40,20 +40,12 @@ export const fetchCastByMovieId = async id => {
     `${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`
   );
 
-  return response.ok
-    ? response.json()
-    : Promise.reject(
-        new Error('Images has not been found. Please, check your request!')
-      );
+  return response.ok;
 };
 export const fetchReviewsByMovieId = async id => {
   const response = await fetch(
     `${BASE_URL}/movie/${id}/reviews?api_key=${API_KEY}`
   );
 
-  return response.ok
-    ? response.json()
-    : Promise.reject(
-        new Error('Images has not been found. Please, check your request!')
-      );
+  return response.ok;
 };

@@ -11,46 +11,44 @@ export const Cast = () => {
   const ImgBaseURL = 'https://image.tmdb.org/t/p/';
 
   useEffect(() => {
-    const fetchCast = async movieId => {
+    const fetchCast = async () => {
       try {
         const data = await fetchCastByMovieId(movieId);
         setCast(data.cast);
-      } catch {
-        setCast(null);
-      }
+      } catch {}
     };
     fetchCast();
   }, [movieId]);
 
   const imgDefault = `https://cdn.pixabay.com/photo/2019/01/26/20/22/public-speaking-3956908_960_720.jpg`;
+
   return (
-    <>
-      {!cast?.length === 0 && <div>We don't have any cast for this movie</div>}
-      {!cast?.length > 0 && (
+    !!cast && (
+      <>
         <List key={movieId}>
           {
-            !cast?.map(({ id, name, character, profile_path }) => (
-              <Item key={id}>
+            !cast?.map(({ cast, profile_path }) => (
+              <Item key={cast.id}>
                 <Image
-                  src={
+                  imageUrl={
                     profile_path
-                      ? `${ImgBaseURL}w500${profile_path}`
+                      ? `${ImgBaseURL}/${cast.profile_path}`
                       : imgDefault
                   }
-                  alt={name}
+                  alt={cast.name}
                   width="100"
                   height="160"
                 />
                 <TextWrapper>
-                  <Name>{name}</Name>
-                  <Content>Character: {character}</Content>
+                  <Name>{cast.name}</Name>
+                  <Content>Character: {cast.character}</Content>
                 </TextWrapper>
               </Item>
             ))
           }
         </List>
-      )}
-    </>
+      </>
+    )
   );
 };
 
@@ -61,6 +59,7 @@ Cast.propTypes = {
       name: PropTypes.string,
       character: PropTypes.string,
       profile_path: PropTypes.string,
+      imageUrl: PropTypes.string.isRequired,
     })
   ),
 };

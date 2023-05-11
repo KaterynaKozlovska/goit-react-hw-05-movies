@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { fetchMoviesById } from '../moviesFinderApi';
 import { Outlet } from 'react-router-dom';
@@ -66,17 +66,14 @@ export function MovieDetails() {
             <TitleText>Additional information</TitleText>
             <ul>
               <Item>
-                <Link
-                  to={`/movies/${movieId}/cast`}
-                  state={{ from: location?.state?.from ?? '/' }}
-                >
+                <Link to="cast" state={{ from: location?.state?.from ?? '/' }}>
                   Cast
                 </Link>
               </Item>
 
               <Item>
                 <Link
-                  to={`/movies/${movieId}/reviews`}
+                  to="reviews"
                   state={{ from: location?.state?.from ?? '/' }}
                 >
                   Reviews
@@ -85,9 +82,7 @@ export function MovieDetails() {
             </ul>
           </div>
         </MovieCard>
-        <Suspense>
-          <Outlet />
-        </Suspense>
+        <Outlet />
       </>
     )
   );
