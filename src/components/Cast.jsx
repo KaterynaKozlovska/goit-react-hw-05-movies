@@ -28,10 +28,12 @@ export const Cast = () => {
           {cast.map(({ id, name, character, profile_path }) => (
             <Item key={id}>
               <Image
-                imageUrl={
+                src={
                   profile_path ? `${ImgBaseURL}/${profile_path}` : imgDefault
                 }
                 alt={name}
+                width="100"
+                height="160"
               />
               <TextWrapper>
                 <Name>{name}</Name>
@@ -52,7 +54,6 @@ Cast.propTypes = {
       name: PropTypes.string,
       character: PropTypes.string,
       profile_path: PropTypes.string,
-      imageUrl: PropTypes.string.isRequired,
     })
   ),
 };

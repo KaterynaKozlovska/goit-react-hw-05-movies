@@ -23,8 +23,8 @@ const Item = styled.li`
 
 const Image = styled.img`
   display: block;
-  width: 100%;
-  height: 100%;
+  width="100";
+  height="160";
 `;
 
 const TextWrapper = styled.div`
