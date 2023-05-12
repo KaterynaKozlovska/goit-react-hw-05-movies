@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import { List, Item, Image, TextWrapper, Name, Content } from './Cast.styled';
 import PropTypes from 'prop-types';
 import { fetchCastByMovieId } from '../moviesFinderApi';
+import imgDefault from '../avatar.jpg';
 
 export const Cast = () => {
   const [cast, setCast] = useState(null);
 
   const { movieId } = useParams();
-  const ImgBaseURL = 'https://image.tmdb.org/t/p/';
+  const ImgBaseURL = 'https://image.tmdb.org/t/p/original';
 
   useEffect(() => {
     const fetchCast = async () => {
@@ -20,32 +21,24 @@ export const Cast = () => {
     fetchCast();
   }, [movieId]);
 
-  const imgDefault = `https://cdn.pixabay.com/photo/2019/01/26/20/22/public-speaking-3956908_960_720.jpg`;
-
   return (
     !!cast && (
       <>
-        <List key={movieId}>
-          {
-            !cast?.map(({ cast, profile_path }) => (
-              <Item key={cast.id}>
-                <Image
-                  imageUrl={
-                    profile_path
-                      ? `${ImgBaseURL}/${cast.profile_path}`
-                      : imgDefault
-                  }
-                  alt={cast.name}
-                  width="100"
-                  height="160"
-                />
-                <TextWrapper>
-                  <Name>{cast.name}</Name>
-                  <Content>Character: {cast.character}</Content>
-                </TextWrapper>
-              </Item>
-            ))
-          }
+        <List>
+          {cast.map(({ id, name, character, profile_path }) => (
+            <Item key={id}>
+              <Image
+                imageUrl={
+                  profile_path ? `${ImgBaseURL}/${profile_path}` : imgDefault
+                }
+                alt={name}
+              />
+              <TextWrapper>
+                <Name>{name}</Name>
+                <Content>Character: {character}</Content>
+              </TextWrapper>
+            </Item>
+          ))}
         </List>
       </>
     )
