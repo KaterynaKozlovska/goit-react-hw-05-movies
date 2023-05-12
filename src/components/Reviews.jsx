@@ -19,19 +19,22 @@ export const Reviews = () => {
     fetchReviews();
   }, [movieId]);
 
-  return reviews.length > 0 ? (
+  return (
     <>
-      <List>
-        {reviews.map(({ reviews }) => (
-          <Item key={reviews.id}>
-            <Name>Author: {reviews.author}</Name>
-            <Content>{reviews.content}</Content>
-          </Item>
-        ))}
-      </List>
+      {reviews.length === 0 && (
+        <div>We don't have any reviews for this movie</div>
+      )}
+      {reviews.length > 0 && (
+        <List>
+          {reviews.map(({ id, author, content }) => (
+            <Item key={id}>
+              <Name>Author: {author}</Name>
+              <Content>{content}</Content>
+            </Item>
+          ))}
+        </List>
+      )}
     </>
-  ) : (
-    <p>We don't have any reviews for this movie</p>
   );
 };
 
