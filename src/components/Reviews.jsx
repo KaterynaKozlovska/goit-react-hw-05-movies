@@ -21,10 +21,7 @@ export const Reviews = () => {
 
   return (
     <>
-      {reviews.length === 0 && (
-        <div>We don't have any reviews for this movie</div>
-      )}
-      {reviews.length > 0 && (
+      {reviews.length > 1 ? (
         <List>
           {reviews.map(({ id, author, content }) => (
             <Item key={id}>
@@ -33,6 +30,8 @@ export const Reviews = () => {
             </Item>
           ))}
         </List>
+      ) : (
+        <p> We don't have any reviews for this movie</p>
       )}
     </>
   );
